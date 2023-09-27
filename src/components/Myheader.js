@@ -5,7 +5,12 @@ class Myheader extends Component{
     console.log('Myheader 실행')
     return(
       <header>
-        <h1 className="logo"><a href='/'>{this.props.title}</a></h1>
+        <h1 className="logo">
+          <a href='/' onClick={e=>{
+            this.props.onChangePage();
+            }}>{this.props.title}
+          </a>
+        </h1>
         <p>{this.props.desc}</p>
       </header>
     )

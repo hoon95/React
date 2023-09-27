@@ -5,11 +5,15 @@ class Nav extends Component{
       console.log('Nav 실행')
       let lists = [];
       let data = this.props.data;
-      let i = 0;
-      while(i<data.length){
-        lists.push(<li key={data[i].id}><a href="">{data[i].title}</a></li>);
-        i++;
-      }
+      // let $this = this.props;
+      data.forEach((item, index)=>{
+         lists.push(<li key={index}><a href="/" data-id={item.id} onClick = {(e)=>{
+          e.preventDefault();
+          // this.props.onChangePage(e.target.dataset.id);
+          this.props.onChangePage(item.id);
+        }}
+        >{item.title}</a></li>)
+      })
       return(
         <nav>
           <ul>
