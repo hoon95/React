@@ -7,17 +7,18 @@ export default class CreateArticle extends Component {
             <h2>Create Article</h2>
             <form action='/create_process' method='POST' onSubmit={(e)=>{
                 e.preventDefault();
-                console.log(e);
-                // let title = ;
-                // let desc = ;
-                // this.props.onsubmit(title, desc);
+                console.log(e.target.title.value);
+
+                let title = e.target.title.value;
+                let desc = e.target.title.desc;
+                this.props.onsubmit(title, desc);
             }}>
                 <p>
-                   <label for='title'>Title:</label> 
-                   <input type='text' name='title' placeholder='title' />
+                   <label htmlFor='title'>Title:</label> 
+                   <input type='text' name='title' placeholder='title' id='title' />
                 </p>
                 <p>
-                    <label for='desc'>Description: </label>
+                    <label htmlFor='desc'>Description: </label>
                     <textarea id='desc' name='desc' placeholder='description'></textarea>
                 </p>
                 <button>Submit</button>

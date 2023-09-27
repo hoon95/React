@@ -1,8 +1,8 @@
 import { Component } from 'react';
 
-class Myarticle extends Component{
+class ReadArticle extends Component{
     render(){
-      console.log('MyArticle 실행')
+      console.log('ReadArticle 실행')
       return(
         <article>
           <h2>{this.props.title}</h2>
@@ -13,4 +13,4 @@ class Myarticle extends Component{
   }
 
 
-export default Myarticle;
+export default ReadArticle;

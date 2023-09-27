@@ -2,6 +2,7 @@ import { Component } from 'react';
 
 export default class Controls extends Component {
   render() {
+    console.log('Controls 실행');
     return (
         <nav>
             <ul className='menu'>

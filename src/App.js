@@ -1,7 +1,7 @@
 import './App.css';
 import { Component } from 'react';
 import Myheader from './components/Myheader';
-// import Myarticle from './components/MyArticle';
+import ReadArticle from './components/ReadArticle';
 import Nav from './components/Nav';
 import Controls from './components/Controls';
 import CreateArticle from './components/CreateArticle';
@@ -9,6 +9,7 @@ import CreateArticle from './components/CreateArticle';
 class App extends Component{
   constructor(props){
     super(props);
+    this.max_menu_id = 3;
     this.state = {
       mode: 'welcome',
       selected_id: 0,
@@ -35,6 +36,7 @@ class App extends Component{
     if(this.state.mode === 'welcome'){
       _title = this.state.welcome.title;
       _desc = this.state.welcome.desc;
+      _article = <ReadArticle title={_title} desc={_desc} />
     }else if(this.state.mode === 'read'){
       /*
       while 반복문 활용
@@ -59,8 +61,17 @@ class App extends Component{
       }
       // _title = this.state.menus[this.state.selected_id].title;
       // _desc = this.state.menus[this.state.selected_id].desc;
+      _article = <ReadArticle title={_title} desc={_desc} />
+
     }else if(this.state.mode === 'create'){
-      _article = <CreateArticle submit={(_title, _desc)=>{
+      _article = <CreateArticle onsubmit={(_title, _desc)=>{
+        this.max_menu_id++;
+        let _menus = this.state.menus.concat(
+          {id: this.max_menu_id, title: _title, desc: _desc}
+        );
+        this.setState({
+          menus: _menus
+        });
         console.log(_title, _desc);
       }}/>;
     }else if(this.state.mode === 'update'){
