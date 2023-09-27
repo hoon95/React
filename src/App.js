@@ -66,11 +66,18 @@ class App extends Component{
     }else if(this.state.mode === 'create'){
       _article = <CreateArticle onsubmit={(_title, _desc)=>{
         this.max_menu_id++;
-        let _menus = this.state.menus.concat(
-          {id: this.max_menu_id, title: _title, desc: _desc}
-        );
+        // push 대체 방법 1. concat
+        // let _menus = this.state.menus.concat(
+        //   {id: this.max_menu_id, title: _title, desc: _desc}
+        // );
+        
+        // push 대체 방법 2. Array.from
+        let newMenus = Array.from(this.state.menus);
+        newMenus.push({id:this.max_menu_id, title: _title, desc: _desc});
+
         this.setState({
-          menus: _menus
+          // menus: _menus    // concat
+          menus: newMenus     // Array.from
         });
         console.log(_title, _desc);
       }}/>;
