@@ -48,13 +48,12 @@ class App extends Component{
               mode: 'welcome'
             });
           }}>{this.state.subject.title}</a></h1>
-          <h1 className="logo"><a href='/' onClick={function(e){
+          {/* <h1 className="logo"><a href='/' onClick={function(e){
             e.preventDefault();
-            // this.state.mode = 'welcome';
             this.setState({
               mode: 'welcome'
             });
-          }.bind(this)}>{this.state.subject.title}</a></h1>
+          }.bind(this)}>{this.state.subject.title}</a></h1> */}
           <p>{this.state.subject.desc}</p>
         </header>
         <Nav data={this.state.menus} />
