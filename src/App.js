@@ -5,6 +5,7 @@ import ReadArticle from './components/ReadArticle';
 import Nav from './components/Nav';
 import Controls from './components/Controls';
 import CreateArticle from './components/CreateArticle';
+import UpdateArticle from './components/UpdateArticle';
 
 class App extends Component{
   constructor(props){
@@ -28,9 +29,33 @@ class App extends Component{
       ]
     }
   }
+  getReadArticle(){
+    let result;
+    // forEach 버전
+    this.state.menus.forEach((item)=>{
+      if(item.id === this.state.selected_id){
+        result = item;
+      }
+    });
+    return result;
 
-  render(){
-    console.log('App 실행')
+    // while 버전
+    // let i = 0;
+    // while(i<this.state.menus.length){
+    //   let data = this.state.menus[i];
+    //   if(data.id === this.state.selected_id){
+    //     _title = data.title;
+    //     _desc = data.desc;
+    //     break;
+    //   }
+    //   i++;
+    // }
+
+    // 반복되는 내용(while)
+    // _title = this.state.menus[this.state.selected_id].title;
+    // _desc = this.state.menus[this.state.selected_id].desc;
+  }
+  getArticle(){
     let _title, _desc, _article = null;
 
     if(this.state.mode === 'welcome'){
@@ -38,30 +63,8 @@ class App extends Component{
       _desc = this.state.welcome.desc;
       _article = <ReadArticle title={_title} desc={_desc} />
     }else if(this.state.mode === 'read'){
-      /*
-      while 반복문 활용
-      초기 값 i = 0
-      this.state.menus의 값으로 반복문
-      반복 할 일
-        - 변수명 data에 this.state.menus의 각 값을 할당
-        - if (data의 id값 = selected_id값){
-          변수명 _title에 data.title 저장
-          변수명 _desc에 data.desc 저장
-        }
-      */
-      let i = 0;
-      while(i<this.state.menus.length){
-        let data = this.state.menus[i];
-        if(data.id === this.state.selected_id){
-          _title = data.title;
-          _desc = data.desc;
-          break;
-        }
-        i++;
-      }
-      // _title = this.state.menus[this.state.selected_id].title;
-      // _desc = this.state.menus[this.state.selected_id].desc;
-      _article = <ReadArticle title={_title} desc={_desc} />
+      let _data = this.getReadArticle();
+      _article = <ReadArticle title={_data.title} desc={_data.desc} />
 
     }else if(this.state.mode === 'create'){
       _article = <CreateArticle onsubmit={(_title, _desc)=>{
@@ -82,10 +85,16 @@ class App extends Component{
         console.log(_title, _desc);
       }}/>;
     }else if(this.state.mode === 'update'){
-      _article = '<h2>update</h2>';
+      let _data = this.getReadArticle();
+      _article = <UpdateArticle title={_data.title} desc={_data.desc} />
     }else if(this.state.mode === 'delete'){
       _article = '<h2>delete</h2>';
     }
+    return _article;
+  }
+  render(){
+    console.log('App 실행')
+
     return(
       <div className="App content">
         <Myheader
@@ -100,7 +109,9 @@ class App extends Component{
           this.setState({mode: 'read', selected_id: Number(id)})
         }}/>
         {/* <Myarticle title={_title} desc={_desc} /> */}
-        {_article}
+        {/* {_article} */}
+        {this.getArticle()}
+
         <Controls onChangeMode={(_mode)=>{
           this.setState({
             mode: _mode
