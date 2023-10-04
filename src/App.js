@@ -85,8 +85,22 @@ class App extends Component{
         console.log(_title, _desc);
       }}/>;
     }else if(this.state.mode === 'update'){
-      let _data = this.getReadArticle();
-      _article = <UpdateArticle title={_data.title} desc={_data.desc} />
+      let _content = this.getReadArticle();
+      _article = <UpdateArticle data={_content} onsubmit={(_id, _title, _desc)=>{
+        console.log(_id, _title, _desc);
+
+        let _menus = Array.from(this.state.menus);
+
+        _menus.forEach((item, idx)=>{
+          if(item.id === _id){
+            _menus[idx] = {id: _id, title: _title, desc: _desc};
+          }
+        });
+        this.setState({
+          menus: _menus,
+          mode: 'read'
+        })
+      }} />
     }else if(this.state.mode === 'delete'){
       _article = '<h2>delete</h2>';
     }
@@ -113,9 +127,24 @@ class App extends Component{
         {this.getArticle()}
 
         <Controls onChangeMode={(_mode)=>{
-          this.setState({
-            mode: _mode
-          })
+          if(_mode === 'delete'){
+            if(window.confirm('정말 삭제할까요?')){
+               let _menus = Array.from(this.state.menus);
+               _menus.forEach((item, idx)=>{
+                if(item.id === this.state.selected_id){
+                  _menus.splice(idx,1);
+                }
+               });
+               this.setState({
+                menus: _menus,
+                mode: 'welcome'
+               });
+            }
+          }else{
+            this.setState({
+              mode: _mode
+            })
+          }
         }} />
      </div>
     )
